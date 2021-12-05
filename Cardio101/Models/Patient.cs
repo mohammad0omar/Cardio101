@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Cardio101.Models
@@ -9,5 +10,6 @@ namespace Cardio101.Models
 
         [Display(Name = "Patient Name")]
         public string Name { get; set; }
+        public List<Study> Studies { get; set; }
     }
 }

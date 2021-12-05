@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Cardio101.Models
 {
@@ -13,6 +14,8 @@ namespace Cardio101.Models
         [Display(Name = "Serial Number"), Required]
         public string SerialNumber { get; set; }
         public string Description { get; set; }
+
+        public List<Study> Studies { get; set; }
 
     }
 }

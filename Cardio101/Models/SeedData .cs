@@ -10,9 +10,9 @@ namespace Cardio101.Models
     {
         public static void Initialize(IServiceProvider serviceProvider)
         {
-            using (var context = new Cardio101Context(
+            using (var context = new ApplicationDbContext(
                 serviceProvider.GetRequiredService<
-                    DbContextOptions<Cardio101Context>>()))
+                    DbContextOptions<ApplicationDbContext>>()))
             {
                 // Look for any movies.
                 if (context.Patient.Any())
