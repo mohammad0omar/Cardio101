@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 namespace Cardio101.Models
 {
     // [Index(nameof(SerialNumber), IsUnique = true)] introduced in 5.0
-    public class Device
+    public class Device : IName
     {
         public int Id { get; set; }
 

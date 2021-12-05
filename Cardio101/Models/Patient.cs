@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Cardio101.Models
 {
-    public class Patient
+    public class Patient : IName
     {
         public int Id { get; set; }
 
