@@ -31,6 +31,14 @@ namespace Cardio101.Data
                 .HasOne(p => p.Patient)
                 .WithMany(b => b.Studies)
                 .IsRequired();
+
+            modelBuilder.Entity<Study>()
+                .Property(b => b.LowHeartRate)
+                .HasDefaultValue(true);
+
+            modelBuilder.Entity<Study>()
+                .Property(b => b.HighHeartRate)
+                .HasDefaultValue(true);
         }
         public DbSet<Cardio101.Models.Device> Device { get; set; }
         public DbSet<Cardio101.Models.Patient> Patient { get; set; }

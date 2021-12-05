@@ -189,7 +189,11 @@ namespace Cardio101.Migrations
                     StartTime = table.Column<DateTime>(nullable: false),
                     Duration = table.Column<long>(nullable: false),
                     PatientId = table.Column<int>(nullable: false),
-                    DeviceId = table.Column<int>(nullable: false)
+                    DeviceId = table.Column<int>(nullable: false),
+                    HeartRate = table.Column<long>(nullable: false),
+                    NormalHeartRate = table.Column<int>(nullable: false),
+                    LowHeartRate = table.Column<int>(nullable: false, defaultValue: 1),
+                    HighHeartRate = table.Column<int>(nullable: false, defaultValue: 1)
                 },
                 constraints: table =>
                 {

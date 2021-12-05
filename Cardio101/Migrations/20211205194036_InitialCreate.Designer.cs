@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Cardio101.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20211205192503_InitialCreate")]
+    [Migration("20211205194036_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -74,6 +74,22 @@ namespace Cardio101.Migrations
 
                     b.Property<long>("Duration")
                         .HasColumnType("bigint");
+
+                    b.Property<long>("HeartRate")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("HighHeartRate")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(1);
+
+                    b.Property<int>("LowHeartRate")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(1);
+
+                    b.Property<int>("NormalHeartRate")
+                        .HasColumnType("int");
 
                     b.Property<int>("PatientId")
                         .HasColumnType("int");
