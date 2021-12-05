@@ -7,31 +7,23 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Cardio101.Data;
 using Cardio101.Models;
-using Microsoft.Extensions.Logging;
 
 namespace Cardio101.Controllers
 {
     public class StudiesController : Controller
     {
-
-        private readonly ILogger _logger;
-
         private readonly ApplicationDbContext _context;
 
-        public StudiesController(ApplicationDbContext context, ILogger<StudiesController> logger)
+        public StudiesController(ApplicationDbContext context)
         {
             _context = context;
-            _logger = logger;
         }
 
         // GET: Studies
         public async Task<IActionResult> Index()
         {
-            var studies = _context.Study
-           .Include(c => c.Device)
-           .Include(c => c.Patient)
-           .AsNoTracking();
-            return View(await studies.ToListAsync());
+            var applicationDbContext = _context.Study.Include(s => s.Device).Include(s => s.Patient);
+            return View(await applicationDbContext.ToListAsync());
         }
 
         // GET: Studies/Details/5
@@ -43,6 +35,8 @@ namespace Cardio101.Controllers
             }
 
             var study = await _context.Study
+                .Include(s => s.Device)
+                .Include(s => s.Patient)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (study == null)
             {
@@ -55,7 +49,8 @@ namespace Cardio101.Controllers
         // GET: Studies/Create
         public IActionResult Create()
         {
-            PopulateDevicesDropDownList();
+            ViewData["DeviceId"] = new SelectList(_context.Device, "Id", "SerialNumber");
+            ViewData["PatientId"] = new SelectList(_context.Patient, "Id", "Name");
             return View();
         }
 
@@ -64,7 +59,7 @@ namespace Cardio101.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,StartTime,Duration")] Study study)
+        public async Task<IActionResult> Create([Bind("Id,StartTime,Duration,PatientId,DeviceId")] Study study)
         {
             if (ModelState.IsValid)
             {
@@ -72,6 +67,8 @@ namespace Cardio101.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["DeviceId"] = new SelectList(_context.Device, "Id", "SerialNumber", study.DeviceId);
+            ViewData["PatientId"] = new SelectList(_context.Patient, "Id", "Name", study.PatientId);
             return View(study);
         }
 
@@ -88,6 +85,8 @@ namespace Cardio101.Controllers
             {
                 return NotFound();
             }
+            ViewData["DeviceId"] = new SelectList(_context.Device, "Id", "SerialNumber", study.DeviceId);
+            ViewData["PatientId"] = new SelectList(_context.Patient, "Id", "Name", study.PatientId);
             return View(study);
         }
 
@@ -96,7 +95,7 @@ namespace Cardio101.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,StartTime,Duration")] Study study)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,StartTime,Duration,PatientId,DeviceId")] Study study)
         {
             if (id != study.Id)
             {
@@ -123,6 +122,8 @@ namespace Cardio101.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["DeviceId"] = new SelectList(_context.Device, "Id", "SerialNumber", study.DeviceId);
+            ViewData["PatientId"] = new SelectList(_context.Patient, "Id", "Name", study.PatientId);
             return View(study);
         }
 
@@ -135,6 +136,8 @@ namespace Cardio101.Controllers
             }
 
             var study = await _context.Study
+                .Include(s => s.Device)
+                .Include(s => s.Patient)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (study == null)
             {
@@ -158,16 +161,6 @@ namespace Cardio101.Controllers
         private bool StudyExists(int id)
         {
             return _context.Study.Any(e => e.Id == id);
-        }
-
-        private void PopulateDevicesDropDownList(object selectedDevice = null)
-        {
-            var devicesQuery = from d in _context.Device
-                                   orderby d.SerialNumber
-                                   select d;
-            ViewBag.DeviceSerialNumber = new SelectList(devicesQuery.AsNoTracking(), "Device", "DeviceSerialNumber", selectedDevice);
-            _logger.LogInformation("--------------------------");
-            _logger.LogInformation("sdfsd");
         }
     }
 }

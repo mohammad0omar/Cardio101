@@ -189,8 +189,7 @@ namespace Cardio101.Migrations
                     StartTime = table.Column<DateTime>(nullable: false),
                     Duration = table.Column<long>(nullable: false),
                     PatientId = table.Column<int>(nullable: false),
-                    DeviceSerialNumber = table.Column<string>(nullable: true),
-                    DeviceId = table.Column<int>(nullable: true)
+                    DeviceId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -200,7 +199,7 @@ namespace Cardio101.Migrations
                         column: x => x.DeviceId,
                         principalTable: "Device",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Study_Patient_PatientId",
                         column: x => x.PatientId,

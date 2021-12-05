@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Cardio101.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20211205000402_InitialCreate")]
+    [Migration("20211205181042_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -69,11 +69,8 @@ namespace Cardio101.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("DeviceId")
+                    b.Property<int>("DeviceId")
                         .HasColumnType("int");
-
-                    b.Property<string>("DeviceSerialNumber")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<long>("Duration")
                         .HasColumnType("bigint");
@@ -297,7 +294,9 @@ namespace Cardio101.Migrations
                 {
                     b.HasOne("Cardio101.Models.Device", "Device")
                         .WithMany("Studies")
-                        .HasForeignKey("DeviceId");
+                        .HasForeignKey("DeviceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Cardio101.Models.Patient", "Patient")
                         .WithMany("Studies")

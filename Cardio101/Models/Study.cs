@@ -16,10 +16,11 @@ namespace Cardio101.Models
 
         //[Display(Name = "Patient Name"), Required]
         public int PatientId { get; set; }
+
         public Patient Patient { get; set; }
 
         //[Display(Name = "Device Serial Number"), Required]
-        public string DeviceSerialNumber { get; set; }
+        public int DeviceId { get; set; }
         public Device Device { get; set; }
 
     }
