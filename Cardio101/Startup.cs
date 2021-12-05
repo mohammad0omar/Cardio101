@@ -34,12 +34,6 @@ namespace Cardio101
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
             services.AddRazorPages();
-
-            services.AddDbContext<Cardio101Context>(options =>
-                    options.UseSqlServer(Configuration.GetConnectionString("Cardio101Context")));
-
-            services.AddDbContext<Devices101Context>(options =>
-                    options.UseSqlServer(Configuration.GetConnectionString("Devices101Context")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

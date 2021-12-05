@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Cardio101.Migrations.ApplicationDb
+namespace Cardio101.Migrations
 {
     public partial class InitialCreate : Migration
     {
@@ -44,6 +44,34 @@ namespace Cardio101.Migrations.ApplicationDb
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Device",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(nullable: false),
+                    SerialNumber = table.Column<string>(nullable: false),
+                    Description = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Device", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Patient",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Patient", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -152,6 +180,35 @@ namespace Cardio101.Migrations.ApplicationDb
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Study",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    StartTime = table.Column<DateTime>(nullable: false),
+                    Duration = table.Column<long>(nullable: false),
+                    PatientId = table.Column<int>(nullable: false),
+                    DeviceSerialNumber = table.Column<string>(nullable: true),
+                    DeviceId = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Study", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Study_Device_DeviceId",
+                        column: x => x.DeviceId,
+                        principalTable: "Device",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Study_Patient_PatientId",
+                        column: x => x.PatientId,
+                        principalTable: "Patient",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -190,6 +247,22 @@ namespace Cardio101.Migrations.ApplicationDb
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Device_SerialNumber",
+                table: "Device",
+                column: "SerialNumber",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Study_DeviceId",
+                table: "Study",
+                column: "DeviceId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Study_PatientId",
+                table: "Study",
+                column: "PatientId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -210,10 +283,19 @@ namespace Cardio101.Migrations.ApplicationDb
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "Study");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Device");
+
+            migrationBuilder.DropTable(
+                name: "Patient");
         }
     }
 }

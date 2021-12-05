@@ -12,9 +12,9 @@ namespace Cardio101.Controllers
 {
     public class PatientsController : Controller
     {
-        private readonly Cardio101Context _context;
+        private readonly ApplicationDbContext _context;
 
-        public PatientsController(Cardio101Context context)
+        public PatientsController(ApplicationDbContext context)
         {
             _context = context;
         }

@@ -6,11 +6,11 @@
     },
     "mssql2": {
       "type": "mssql",
-      "connectionId": "ConnectionStrings:Cardio101Context"
+      "connectionId": "ConnectionStrings:ApplicationDbContext"
     },
     "mssql3": {
       "type": "mssql",
-      "connectionId": "ConnectionStrings:Devices101Context"
+      "connectionId": "ConnectionStrings:ApplicationDbContext"
     }
   }
 }
