@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Cardio101.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20211205183343_InitialCreate")]
+    [Migration("20211205192503_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

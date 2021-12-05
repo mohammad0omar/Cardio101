@@ -23,14 +23,15 @@ namespace Cardio101.Models
         public int DeviceId { get; set; }
         public Device Device { get; set; }
 
+        [Required(ErrorMessage = "Pleasee enter a number")]
         [Range(0, 480, ErrorMessage = "Value for {0} must be between {1} and {2}.")]
-        public object NormalHeartRate;
+        public int NormalHeartRate;
 
         [Range(0, 480, ErrorMessage = "Value for {0} must be between {1} and {2}.")]
-        public object LowHeartRate = 50;
+        public int LowHeartRate = 50;
 
         [Range(0, 480, ErrorMessage = "Value for {0} must be between {1} and {2}.")]
-        public object HighHeartRate = 100;
+        public int HighHeartRate = 100;
 
     }
 }
