@@ -62,7 +62,7 @@ namespace Cardio101
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Studies}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
             });
         }
