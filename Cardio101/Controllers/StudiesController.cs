@@ -21,6 +21,7 @@ namespace Cardio101.Controllers
         public async Task<IActionResult> Index()
         {
             var applicationDbContext = _context.Study.Include(s => s.Device).Include(s => s.Patient);
+
             return View(await applicationDbContext.ToListAsync());
         }
 

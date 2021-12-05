@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace Cardio101.Models
 {
@@ -9,7 +10,7 @@ namespace Cardio101.Models
         [DataType(DataType.Date)]
         [Display(Name = "Start Time"), Required]
         // [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        public System.DateTime StartTime { get; set; }
+        public DateTime StartTime { get; set; }
 
         [Display(Name = "Duration (in days)"), Required]
         public uint Duration { get; set;}
@@ -34,6 +35,12 @@ namespace Cardio101.Models
 
         [Range(0, 480, ErrorMessage = "Value for {0} must be between {1} and {2}.")]
         public int HighHeartRate { get; set; } = 100;
+
+        public string Status { 
+            get {
+                TimeSpan timeDuration =  StartTime - DateTime.Now;
+                return timeDuration.TotalDays * -1 < Duration ? "Ongoing" : "Ended";
+            } }
 
     }
 }
