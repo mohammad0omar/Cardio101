@@ -6,6 +6,7 @@ namespace Cardio101.Controllers
     {
         public IActionResult Index()
         {
+            ViewData["Message"] = "Hello " + "moe";
             return View();
         }
         public string Welcome()
