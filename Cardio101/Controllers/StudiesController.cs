@@ -161,5 +161,17 @@ namespace Cardio101.Controllers
         {
             return _context.Study.Any(e => e.Id == id);
         }
+
+        public async Task<IActionResult> modal(int Id)
+        {
+            ViewBag.type = 1;
+            Study study = await _context.Study.FirstOrDefaultAsync(e => e.Id == Id);
+            if (study == null)
+            {
+                return NotFound();
+            }
+            return PartialView("modal_details", study);
+
+        }
     }
 }
