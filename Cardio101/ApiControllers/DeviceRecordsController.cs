@@ -98,6 +98,10 @@ namespace Cardio101.ApiControllers
             {
                 throw new ValidationException("Study Not Found");
             }
+            if (study.Status == "Ended")
+            {
+                throw new ValidationException("Study Finished, cannot add more records");
+            }
             DeviceRecords deviceRecord;
 
             var ms = new MemoryStream();
