@@ -43,5 +43,6 @@ namespace Cardio101.Data
         public DbSet<Cardio101.Models.Device> Device { get; set; }
         public DbSet<Cardio101.Models.Patient> Patient { get; set; }
         public DbSet<Cardio101.Models.Study> Study { get; set; }
+        public DbSet<Cardio101.Models.DeviceRecords> DeviceRecords { get; set; }
     }
 }

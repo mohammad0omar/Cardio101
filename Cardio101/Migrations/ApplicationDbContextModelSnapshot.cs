@@ -45,6 +45,29 @@ namespace Cardio101.Migrations
                     b.ToTable("Device");
                 });
 
+            modelBuilder.Entity("Cardio101.Models.DeviceRecords", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("StudyId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("Time")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long>("Value")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("StudyId");
+
+                    b.ToTable("DeviceRecords");
+                });
+
             modelBuilder.Entity("Cardio101.Models.Patient", b =>
                 {
                     b.Property<int>("Id")
@@ -302,6 +325,13 @@ namespace Cardio101.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
+                });
+
+            modelBuilder.Entity("Cardio101.Models.DeviceRecords", b =>
+                {
+                    b.HasOne("Cardio101.Models.Study", "Study")
+                        .WithMany()
+                        .HasForeignKey("StudyId");
                 });
 
             modelBuilder.Entity("Cardio101.Models.Study", b =>

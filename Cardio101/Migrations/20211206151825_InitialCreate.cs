@@ -212,6 +212,27 @@ namespace Cardio101.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "DeviceRecords",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Time = table.Column<DateTime>(nullable: false),
+                    Value = table.Column<long>(nullable: false),
+                    StudyId = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DeviceRecords", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_DeviceRecords_Study_StudyId",
+                        column: x => x.StudyId,
+                        principalTable: "Study",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -258,6 +279,11 @@ namespace Cardio101.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_DeviceRecords_StudyId",
+                table: "DeviceRecords",
+                column: "StudyId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Study_DeviceId",
                 table: "Study",
                 column: "DeviceId");
@@ -286,13 +312,16 @@ namespace Cardio101.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Study");
+                name: "DeviceRecords");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Study");
 
             migrationBuilder.DropTable(
                 name: "Device");
